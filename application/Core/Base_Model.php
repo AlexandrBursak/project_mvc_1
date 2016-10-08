@@ -6,7 +6,7 @@
  * Time: 7:50 PM
  */
 
-namespace application\Core;
+namespace Core;
 
 
 class Base_Model {

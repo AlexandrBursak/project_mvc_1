@@ -6,8 +6,8 @@
  * Time: 7:54 PM
  */
 
-namespace application\Views;
-use application\Core\Base_View;
+namespace Views;
+use Core\Base_View;
 
 class Home_View extends Base_View {
 

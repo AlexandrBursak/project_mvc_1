@@ -6,7 +6,7 @@
  * Time: 9:12 PM
  */
 
-namespace application\Core;
+namespace Core;
 
 class ClassException extends \Exception
 {

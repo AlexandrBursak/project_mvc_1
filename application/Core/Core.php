@@ -1,8 +1,7 @@
 <?php
 
-namespace application\Core;
-
-use application\helpers\Routing;
+namespace Core;
+use helpers\Routing;
 
 class Core
 {
@@ -16,12 +15,11 @@ class Core
   {
     $route = new Routing();
 
-    $name_controller = 'application\Controllers\\' . ucfirst( $route->getController() ) . '_Controller';
+    $name_controller = 'Controllers\\' . ucfirst( $route->getController() ) . '_Controller';
     try {
       $controller = new $name_controller;
     } catch ( ClassException $e ) {
-//      echo '==============' . "<br>";
-//      print_r( $e );
+      // нужно создать систему логирования ошибок ))
     }
 
     if ( !method_exists( $controller, $route->getAction() . '_Action' ) ) {

@@ -1,6 +1,6 @@
 <?php
 
-namespace application\Core;
+namespace Core;
 
 
 class Base_Controller {

@@ -6,7 +6,7 @@
  * Time: 7:51 PM
  */
 
-namespace application\Core;
+namespace Core;
 
 
 class Base_View {

@@ -1,6 +1,6 @@
 <?php
 
-namespace application\helpers;
+namespace helpers;
 
 class Routing {
 
