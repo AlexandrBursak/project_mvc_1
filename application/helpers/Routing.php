@@ -8,7 +8,7 @@ class Routing {
   private $uriPath;
   private $controller;
   private $action;
-  private $data;
+  private $data = null;
   private $rootFolder;
 
   function __construct()
@@ -20,7 +20,7 @@ class Routing {
 
   function parseURL()
   {
-    $arr = explode('/', trim( $this->uriPath, '/' ) );
+    $arr = explode('/', trim( $this->uriPath, '/' ), 3 );
 
     $controller = 'Home';
     if ( !empty( $arr[0] ) )
@@ -38,7 +38,8 @@ class Routing {
 
     if ( isset( $arr[2] ) )
     {
-      $this->setData( $arr[2] );
+      $arr_args = explode('/', trim( $arr[2], '/' ) );
+      $this->setData( $arr_args );
     }
 
   }
