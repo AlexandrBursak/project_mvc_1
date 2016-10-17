@@ -9,10 +9,12 @@
 namespace Views;
 
 use Core\Base_View;
+use helpers\GlobalData;
 
 class Home_View extends Base_View {
 
   function index() {
+    $this->set_date( GlobalData::get( 'site_data' ) );
   }
 
   function index_sub( $data ) {
@@ -20,8 +22,6 @@ class Home_View extends Base_View {
 
   function sub_template()
   {
-    $this->concat_content();
-    $layout = $this->get_layout();
   }
 
   function get_header() {

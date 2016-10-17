@@ -5,7 +5,8 @@ namespace Core;
 
 class Base_View {
 
-  private $layout;
+  protected $data = [];
+
   private $content;
 
   private $default_header = APP_PATH.'templates/components/header.php';
@@ -18,8 +19,16 @@ class Base_View {
 
   }
 
+  function parse_layout()
+  {
+    $this->concat_content();
+    $this->show();
+  }
+
   function concat_content()
   {
+
+    $data = $this->get_data();
 
     $content = [];
     foreach ( ['header', 'main', 'footer', 'layout'] as $key => $part )
@@ -33,7 +42,6 @@ class Base_View {
       ob_end_clean();
 
     }
-//      var_dump($content);
 
     $this->set_content( $content['layout'] );
 
@@ -59,16 +67,6 @@ class Base_View {
     return $this->default_main;
   }
 
-  function set_layout($attr)
-  {
-    $this->layout = $attr;
-  }
-
-  function get_layout()
-  {
-    return $this->layout;
-  }
-
   function set_content($attr)
   {
     $this->content = $attr;
@@ -77,6 +75,16 @@ class Base_View {
   function get_content()
   {
     return $this->content;
+  }
+
+  function set_date( $data )
+  {
+    $this->data = $data;
+  }
+
+  function get_data()
+  {
+    return $this->data;
   }
 
   function show()

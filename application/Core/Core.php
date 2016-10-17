@@ -1,65 +1,42 @@
 <?php
 
 namespace Core;
-
+use helpers\GlobalData;
 use helpers\Routing;
+use Core\ClassException;
 
 class Core {
 
   function __construct() {
-
+    $route = new Routing();
   }
 
   function run() {
     $args = null;
 
-    $route = new Routing();
-
-    $name_controller = 'Controllers\\' . ucfirst( $route->getController() ) . '_Controller';
+    $name_controller = 'Controllers\\' . ucfirst( GlobalData::get( 'page' ) ) . '_Controller';
     try {
       $controller = new $name_controller;
-    } catch ( \Exception $e ) {
+    } catch ( ClassException $e ) {
 //       нужно создать систему логирования ошибок ))
     }
 
-    if ( ! method_exists( $controller, $route->getAction() . '_Action' ) ) {
-      header( 'Location: ' . $route->getRootFolder() );
+    if ( ! method_exists( $controller, GlobalData::get( 'action' ) . '_Action' ) ) {
+      header( 'Location: ' . GlobalData::get( 'rootFolder' ) );
     } else {
-      $name_method_controller = $route->getAction() . '_Action';
+      $name_method_controller = GlobalData::get( 'action' ) . '_Action';
     }
 
-    if ( $route->getData() ) {
-      $args = $route->getData();
+    if ( GlobalData::get( 'data' ) ) {
+      $args = GlobalData::get( 'data' );
     }
 
-    /**
-     * Set default value for template name
-     */
-    $controller->set_layout( $route->getAction() );
     /**
      * Run action in controller
      */
     $controller->$name_method_controller( $args );
-    $data = $controller->get_data();
-    $layout_name = $controller->get_layout();
+    $controller->render( );
 
-
-    $name_view = 'Views\\' . ucfirst( $route->getController() ) . '_View';
-    try {
-      $view = new $name_view;
-    } catch ( \Exception $e ) {
-//       нужно создать систему логирования ошибок ))
-    }
-
-    if ( ! method_exists( $view, $layout_name ) ) {
-      header( 'Location: ' . $route->getRootFolder() );
-    }
-    /**
-     * Run parse content in view
-     */
-    $view->$layout_name( $data );
-
-    $view->show();
 
   }
 
