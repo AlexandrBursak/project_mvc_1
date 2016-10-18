@@ -8,6 +8,8 @@ use helpers\GlobalData;
 class Contact_View extends Base_View {
 
   function index() {
+    GlobalData::set( 'template', 'index_contact' );
+
     GlobalData::append( GlobalData::CONTENT_DATA, [
       'content' => 'Some form',
       'content_h1' => 'Contact Us'

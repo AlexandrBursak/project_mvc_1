@@ -1,14 +1,15 @@
 <?php
 
 namespace Core;
+use helpers\Configs;
 use helpers\Routing;
 use helpers\Loader;
-//use helpers\ClassException;
 use helpers\GlobalData;
 
 class Core {
 
   function __construct() {
+    Configs::configure();
     Routing::parse();
   }
 
