@@ -1,10 +1,10 @@
 <?php
 namespace Models;
-use \Core\Base_Model;
+use Core\Base_Model;
 use helpers\GlobalData as GlobalData;
 
 
-class Home_Model extends Base_Model
+class Contact_Model extends Base_Model
 {
   function index( $data = null )
   {

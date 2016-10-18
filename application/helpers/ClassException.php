@@ -1,6 +1,6 @@
 <?php
 
-namespace Core;
+namespace helpers;
 
 class ClassException extends \Exception
 {

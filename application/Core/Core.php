@@ -1,31 +1,22 @@
 <?php
 
 namespace Core;
-use helpers\GlobalData;
 use helpers\Routing;
-use Core\ClassException;
+use helpers\Loader;
+//use helpers\ClassException;
+use helpers\GlobalData;
 
 class Core {
 
   function __construct() {
-    $route = new Routing();
+    Routing::parse();
   }
 
   function run() {
     $args = null;
 
-    $name_controller = 'Controllers\\' . ucfirst( GlobalData::get( 'page' ) ) . '_Controller';
-    try {
-      $controller = new $name_controller;
-    } catch ( ClassException $e ) {
-//       нужно создать систему логирования ошибок ))
-    }
-
-    if ( ! method_exists( $controller, GlobalData::get( 'action' ) . '_Action' ) ) {
-      header( 'Location: ' . GlobalData::get( 'rootFolder' ) );
-    } else {
-      $name_method_controller = GlobalData::get( 'action' ) . '_Action';
-    }
+    $controller = Loader::load_component( Loader::COMPONENT_CONTROLLER );
+    $name_method_controller = Loader::load_method( $controller, Loader::COMPONENT_CONTROLLER );
 
     if ( GlobalData::get( 'data' ) ) {
       $args = GlobalData::get( 'data' );
@@ -35,6 +26,9 @@ class Core {
      * Run action in controller
      */
     $controller->$name_method_controller( $args );
+    /**
+     * Render page
+     */
     $controller->render( );
 
 
