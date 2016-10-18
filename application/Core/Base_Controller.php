@@ -2,18 +2,16 @@
 
 namespace Core;
 
-use \Core\ClassException;
+use helpers\ClassException;
 use helpers\Routing;
-use helpers\GlobalData as GlobalData;
+use helpers\Loader;
+use helpers\GlobalData;
 
 
 class Base_Controller {
 
-  private $layout;
-  private $data;
-
-  private $model = null;
-  private $view = null;
+  private $model;
+  private $view;
 
   function __construct() {
 //    echo 'Hello from our controller';
@@ -33,55 +31,24 @@ class Base_Controller {
 
   function set_view( $name = null, $action = null )
   {
-    if ( !isset($this->view) )
+    if ( empty($this->view) )
     {
-      if ( empty( $name ) ) {
-        $name = ucfirst( GlobalData::get( 'page' ) );
-      }
-      $name_view = 'Views\\' . $name . '_View';
-      try {
-        $view = new $name_view;
-      } catch ( ClassException $e ) {
-//       нужно создать систему логирования ошибок ))
-      }
+      $this->view = Loader::load_component( Loader::COMPONENT_VIEW );
+      $name_method = Loader::load_method( $this->view, Loader::COMPONENT_VIEW );
 
-      if ( empty( $action ) ) {
-        $action = ucfirst( GlobalData::get( 'action' ) );
-      }
-      if ( ! method_exists( $view, $action ) ) {
-        header( 'Location: ' . GlobalData::get( 'rootFolder' ) );
-      }
-
-      $this->view = $view;
-
-      $this->view->$action(  );
+      $this->view->$name_method( );
     }
 
   }
 
   function set_model( $name = null, $action = null )
   {
-    if ( !isset( $this->model ) )
+    if ( empty( $this->model ) )
     {
-      if ( empty( $name ) ) {
-        $name = ucfirst( GlobalData::get( 'page' ) );
-      }
-      $name_model = 'Models\\' . $name . '_Model';
-      try {
-        $model = new $name_model;
-      } catch ( ClassException $e ) {
-        echo 'Can not create instance from model';
-      }
+      $this->model = Loader::load_component( Loader::COMPONENT_MODEL );
+      $name_method = Loader::load_method( $this->model, Loader::COMPONENT_MODEL );
 
-      if ( empty( $action ) ) {
-        $action = ucfirst( GlobalData::get( 'action' ) );
-      }
-      if ( ! method_exists( $model, $action ) ) {
-        header( 'Location: ' . GlobalData::get( 'rootFolder' ) );
-      }
-
-      $this->model = $model;
-      $this->model->$action(  );
+      $this->model->$name_method( );
     }
 
   }
@@ -101,7 +68,7 @@ class Base_Controller {
    * @param $property
    * @param $value
    *
-   * @throws \Core\ClassException
+   * @throws \helpers\ClassException
    */
   function __set( $property, $value )
   {
@@ -119,7 +86,7 @@ class Base_Controller {
    * @param $property
    *
    * @return mixed
-   * @throws \Core\ClassException
+   * @throws \helpers\ClassException
    */
   function __get( $property )
   {
@@ -138,7 +105,7 @@ class Base_Controller {
    * @param $values
    *
    * @return mixed
-   * @throws \Core\ClassException
+   * @throws \helpers\ClassException
    */
   function __call( $method, $values )
   {

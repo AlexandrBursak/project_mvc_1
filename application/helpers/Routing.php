@@ -1,26 +1,24 @@
 <?php
 
 namespace helpers;
-use \helpers\GlobalData as GlobalData;
 
 class Routing {
 
-//  private $url;
-//  private $uriPath;
-//  private $controller;
-//  private $action;
-//  private $data = null;
-//  private $rootFolder;
+  static private $url;
 
-  function __construct()
+  static function parse()
   {
-    $this->url = $_SERVER['REQUEST_URI'];
-    $this->cutRootDirectory();
-    $this->parseURL();
-//    var_dump( GlobalData::data() );
+    static::$url = $_SERVER['REQUEST_URI'];
+    self::cutRootDirectory();
+    self::parseURL();
   }
 
-  function parseURL()
+  /**
+   * Parse current URL
+   *
+   * example.com/page/action/another/data
+   */
+  static function parseURL()
   {
     $arr = explode('/', trim( GlobalData::get( 'uriPath' ), '/' ), 3 );
 
@@ -46,11 +44,11 @@ class Routing {
 
   }
 
-  function cutRootDirectory()
+  static function cutRootDirectory()
   {
     $current_project = pathinfo($_SERVER['PHP_SELF']);
     GlobalData::set( 'rootFolder', $current_project['dirname'] );
-    GlobalData::set( 'uriPath', str_replace($current_project['dirname'],'',$this->url) );
+    GlobalData::set( 'uriPath', str_replace($current_project['dirname'],'',self::$url) );
   }
 
 }
