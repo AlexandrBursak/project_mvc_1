@@ -14,10 +14,12 @@ class Base_View {
   const ROOT_FOLDER = APP_PATH;
   const TEMPLATE_FOLDER = '/templates';
   const COMPONENT_FOLDER = '/components';
-  const DEFAULT_HEADER = '/header.php';
-  const DEFAULT_FOOTER = '/footer.php';
-  const DEFAULT_LAYOUT = '/layout.php';
-  const DEFAULT_MAIN = '/index.php';
+
+  const TEMPLATE_EXTENSION = '.php';
+  const DEFAULT_HEADER = 'header';
+  const DEFAULT_FOOTER = 'footer';
+  const DEFAULT_LAYOUT = 'layout';
+  const DEFAULT_MAIN = 'index';
   
   const TEMPLATE_KEY = 'template';
   const COMPONENT_KEY = 'component';
@@ -33,15 +35,17 @@ class Base_View {
   {
     $this->set_meta_date( GlobalData::get( GlobalData::META_DATA ) );
     $this->set_date( GlobalData::get( GlobalData::CONTENT_DATA ) );
-    $this->concat_content();
+    $this->parse_content();
     $this->show();
   }
 
-  function concat_content()
+  function parse_content()
   {
 
     $data = $this->get_data();
     $meta_data = $this->get_meta_data();
+    $permalink = GlobalData::get( 'rootPath' );
+    $navigation = GlobalData::get( 'navigation' );
 
     $content = [];
     foreach ( self::$default_parts as $key => $part )
@@ -74,22 +78,23 @@ class Base_View {
 
   function get_default_header()
   {
-      return $this->get_full_path( self::COMPONENT_KEY )  . self::DEFAULT_HEADER;
+      return $this->get_full_path( self::COMPONENT_KEY ) . '/' . self::DEFAULT_HEADER . self::TEMPLATE_EXTENSION;
   }
 
   function get_default_footer()
   {
-    return $this->get_full_path( self::COMPONENT_KEY )  . self::DEFAULT_FOOTER;
+    return $this->get_full_path( self::COMPONENT_KEY ) . '/' . self::DEFAULT_FOOTER . self::TEMPLATE_EXTENSION;
   }
 
   function get_default_layout()
   {
-    return $this->get_full_path( self::COMPONENT_KEY )  . self::DEFAULT_LAYOUT;
+    return $this->get_full_path( self::COMPONENT_KEY ) . '/' . self::DEFAULT_LAYOUT . self::TEMPLATE_EXTENSION;
   }
 
   function get_default_main()
   {
-    return $this->get_full_path( self::TEMPLATE_KEY )  . self::DEFAULT_MAIN;
+    $template = GlobalData::get( 'template' ) ?: self::DEFAULT_MAIN;
+    return $this->get_full_path( self::TEMPLATE_KEY ) . '/' . $template . self::TEMPLATE_EXTENSION;
   }
 
   function set_content($attr)

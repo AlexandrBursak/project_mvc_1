@@ -1,1 +1,3 @@
-<footer><?php echo $key; ?> It's footer</footer>
+<footer>
+  <div class="container">Tet MVC system</div>
+</footer>

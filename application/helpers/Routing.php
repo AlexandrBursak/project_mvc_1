@@ -10,6 +10,7 @@ class Routing {
   {
     static::$url = $_SERVER['REQUEST_URI'];
     self::cutRootDirectory();
+    self::setToGlobalRootPath();
     self::parseURL();
   }
 
@@ -49,6 +50,12 @@ class Routing {
     $current_project = pathinfo($_SERVER['PHP_SELF']);
     GlobalData::set( 'rootFolder', $current_project['dirname'] );
     GlobalData::set( 'uriPath', str_replace($current_project['dirname'],'',self::$url) );
+  }
+
+  static function setToGlobalRootPath()
+  {
+    $root_path = rtrim( '//' . $_SERVER['HTTP_HOST'] . GlobalData::get( 'rootFolder' ), '/' ) . '/';
+    GlobalData::set( 'rootPath', $root_path );
   }
 
 }

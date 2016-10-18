@@ -12,6 +12,13 @@ class GlobalData {
     self::$data[$property] = $value;
   }
 
+  /**
+   * Get any global values
+   *
+   * @param $property
+   *
+   * @return bool|mixed
+   */
   public static function get( $property )
   {
     if ( isset( self::$data[$property] ) )
