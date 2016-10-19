@@ -14,8 +14,9 @@ class Contact_Model extends Base_Model
   }
   function send( $data = null )
   {
-    var_dump( $_POST );
-    GlobalData::view();
+//    print_r($_POST);
+//    print_r($_GET);
+//    exit;
     // parse data from contact form
   }
 }

@@ -19,11 +19,6 @@ class Contact_View extends Base_View {
 
   function send( $args = null )
   {
-    // go to index
-//    print_r($_POST);
-//    print_r($_GET);
-//    exit;
-//    echo GlobalData::get( Routing::PROJECT_DIR ) . '/contact';
     header( 'Location: ' . GlobalData::get( Routing::PROJECT_DIR ) . '/contact' );
   }
 
