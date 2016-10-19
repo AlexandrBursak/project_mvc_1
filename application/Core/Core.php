@@ -20,8 +20,8 @@ class Core {
     $controller = Loader::load_component( Loader::COMPONENT_CONTROLLER );
     $name_method_controller = Loader::load_method( $controller, Loader::COMPONENT_CONTROLLER );
 
-    if ( GlobalData::get( 'data' ) ) {
-      $args = GlobalData::get( 'data' );
+    if ( GlobalData::get( Routing::DATA ) ) {
+      $args = GlobalData::get( Routing::DATA );
     }
 
     /**
