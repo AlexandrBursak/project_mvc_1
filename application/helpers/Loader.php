@@ -17,6 +17,7 @@ class Loader {
     {
       $component = new $name_component;
     } catch ( ClassException $e ) {
+      print_r ($e);
 //       нужно создать систему логирования ошибок ))
     }
     return $component;
@@ -37,13 +38,13 @@ class Loader {
     switch ( $type ) 
     {
       case self::COMPONENT_VIEW:
-        return 'Views\\' . ucfirst( GlobalData::get( 'page' ) ) . '_View';
+        return 'Views\\' . ucfirst( GlobalData::get( Routing::PAGE ) ) . '_View';
         break;
       case self::COMPONENT_MODEL:
-        return 'Models\\' . ucfirst( GlobalData::get( 'page' ) ) . '_Model';
+        return 'Models\\' . ucfirst( GlobalData::get( Routing::PAGE ) ) . '_Model';
         break;
       case self::COMPONENT_CONTROLLER:
-        return 'Controllers\\' . ucfirst( GlobalData::get( 'page' ) ) . '_Controller';
+        return 'Controllers\\' . ucfirst( GlobalData::get( Routing::PAGE ) ) . '_Controller';
         break;
     }
   }
@@ -53,13 +54,13 @@ class Loader {
     switch ( $type )
     {
       case self::COMPONENT_VIEW:
-        return GlobalData::get( 'action' ) . self::ACTION_METHOD_EXTENSION;
+        return GlobalData::get( Routing::ACTION ) . self::ACTION_METHOD_EXTENSION;
         break;
       case self::COMPONENT_MODEL:
-        return GlobalData::get( 'action' ) . self::ACTION_METHOD_EXTENSION;
+        return GlobalData::get( Routing::ACTION ) . self::ACTION_METHOD_EXTENSION;
         break;
       case self::COMPONENT_CONTROLLER:
-        return GlobalData::get( 'action' ) . self::ACTION_METHOD_EXTENSION;
+        return GlobalData::get( Routing::ACTION ) . self::ACTION_METHOD_EXTENSION;
         break;
     }
   }

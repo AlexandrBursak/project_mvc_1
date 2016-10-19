@@ -15,6 +15,7 @@ spl_autoload_register(function ($class)
 {
   $file_name = str_replace('\\', '/', $class). '.php';
 
+//  echo APPLICATION . $file_name . "</br>";
   if( file_exists( APPLICATION . $file_name ) )
   {
     require_once( APPLICATION . $file_name );
@@ -23,8 +24,18 @@ spl_autoload_register(function ($class)
   {
     throw new ClassException('File ' . APPLICATION . $file_name . ' is absent!');
   }
-  if( !class_exists($class, false) )
+
+  /**
+   * Validate on trait
+   */
+  if ( strpos( $class, 'trait' ) === false )
   {
-    throw new ClassException('Class ' . $class . ' is absent!');
+    /**
+     * Valid on exist class
+     */
+    if( !class_exists($class, false) )
+    {
+      throw new ClassException('Class ' . $class . ' is absent!');
+    }
   }
 });

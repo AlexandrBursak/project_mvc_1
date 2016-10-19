@@ -1,8 +1,10 @@
 <?php
 namespace Core;
 use helpers\GlobalData;
+use helpers\traits\MagicMethod;
 
 class Base_Model {
+  use MagicMethod;
 
   function __construct() {
     $this->do_navigation();

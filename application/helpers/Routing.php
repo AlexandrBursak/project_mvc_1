@@ -9,6 +9,10 @@ class Routing {
   const PROJECT_PATH = 'rootPath';
   const URI_PATH = 'uriPath';
 
+  const PAGE = 'page';
+  const ACTION = 'action';
+  const DATA = 'data';
+
   const DENIED_URI = [ 'index.php', 'load.php' ];
 
   static function parse()
@@ -37,19 +41,19 @@ class Routing {
     {
       $page = $arr[0];
     }
-    GlobalData::set( 'page', $page );
+    GlobalData::set( self::PAGE, $page );
 
     $action = "index";
     if ( isset( $arr[1] ) )
     {
       $action = $arr[1];
     }
-    GlobalData::set( 'action', $action );
+    GlobalData::set( self::ACTION, $action );
 
     if ( is_array( $arr ) && isset( $arr[2] ) )
     {
       $arr_args = explode('/', trim( $arr[2], '/' ) );
-      GlobalData::set( 'data', $arr_args );
+      GlobalData::set( self::DATA, $arr_args );
     }
 
   }

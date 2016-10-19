@@ -6,9 +6,11 @@ use helpers\ClassException;
 use helpers\Routing;
 use helpers\Loader;
 use helpers\GlobalData;
+use helpers\traits\MagicMethod;
 
 
 class Base_Controller {
+  use MagicMethod;
 
   private $model;
   private $view;
@@ -35,7 +37,7 @@ class Base_Controller {
     {
       if ( !empty($name) )
       {
-        GlobalData::set( 'page', $name );
+        GlobalData::set( Routing::PAGE, $name );
       }
       $this->view = Loader::load_component( Loader::COMPONENT_VIEW );
       $name_method = Loader::load_method( $this->view, Loader::COMPONENT_VIEW );
@@ -51,7 +53,7 @@ class Base_Controller {
     {
       if ( !empty($name) )
       {
-        GlobalData::set( 'page', $name );
+        GlobalData::set( Routing::PAGE, $name );
       }
       $this->model = Loader::load_component( Loader::COMPONENT_MODEL );
       $name_method = Loader::load_method( $this->model, Loader::COMPONENT_MODEL );
