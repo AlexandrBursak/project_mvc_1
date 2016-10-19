@@ -2,6 +2,7 @@
 
 namespace Core;
 use helpers\GlobalData;
+use helpers\Routing;
 
 
 class Base_View {
@@ -16,15 +17,15 @@ class Base_View {
   const COMPONENT_FOLDER = '/components';
 
   const TEMPLATE_EXTENSION = '.php';
-  const DEFAULT_HEADER = 'header';
-  const DEFAULT_FOOTER = 'footer';
-  const DEFAULT_LAYOUT = 'layout';
-  const DEFAULT_MAIN = 'index';
+  const DEFAULT_HEADER = 'header'; // templates/component/header.php
+  const DEFAULT_FOOTER = 'footer'; // templates/component/footer.php
+  const DEFAULT_LAYOUT = 'layout'; // templates/component/layout.php
+  const DEFAULT_MAIN = 'index'; // templates/index.php
   
   const TEMPLATE_KEY = 'template';
   const COMPONENT_KEY = 'component';
   
-  private static $default_parts = [ 'header', 'main', 'footer', 'layout' ];
+  private static $default_parts = [ 'header', 'footer', 'main', 'layout' ];
 
   function __construct()
   {
@@ -44,20 +45,16 @@ class Base_View {
 
     $data = $this->get_data();
     $meta_data = $this->get_meta_data();
-    $permalink = GlobalData::get( 'rootPath' );
+    $permalink = GlobalData::get( Routing::PROJECT_PATH );
     $navigation = GlobalData::get( 'navigation' );
 
     $content = [];
     foreach ( self::$default_parts as $key => $part )
     {
-      ob_start(null, 0, PHP_OUTPUT_HANDLER_STDFLAGS);
-
+      ob_start();
       $name_part = 'get_default_'.$part;
       require_once( $this->$name_part() );
-      $content[$part] = ob_get_contents();
-
-      ob_end_clean();
-
+      $content[$part] = ob_get_clean();
     }
 
     $this->set_content( $content['layout'] );
@@ -78,22 +75,25 @@ class Base_View {
 
   function get_default_header()
   {
-      return $this->get_full_path( self::COMPONENT_KEY ) . '/' . self::DEFAULT_HEADER . self::TEMPLATE_EXTENSION;
+    $template = GlobalData::get( 'header_template' ) ?: self::DEFAULT_HEADER;
+    return $this->get_full_path( self::COMPONENT_KEY ) . '/' . $template . self::TEMPLATE_EXTENSION;
   }
 
   function get_default_footer()
   {
-    return $this->get_full_path( self::COMPONENT_KEY ) . '/' . self::DEFAULT_FOOTER . self::TEMPLATE_EXTENSION;
+    $template = GlobalData::get( 'footer_template' ) ?: self::DEFAULT_FOOTER;
+    return $this->get_full_path( self::COMPONENT_KEY ) . '/' . $template . self::TEMPLATE_EXTENSION;
   }
 
   function get_default_layout()
   {
-    return $this->get_full_path( self::COMPONENT_KEY ) . '/' . self::DEFAULT_LAYOUT . self::TEMPLATE_EXTENSION;
+    $template = GlobalData::get( 'layout_template' ) ?: self::DEFAULT_LAYOUT;
+    return $this->get_full_path( self::COMPONENT_KEY ) . '/' . $template . self::TEMPLATE_EXTENSION;
   }
 
   function get_default_main()
   {
-    $template = GlobalData::get( 'template' ) ?: self::DEFAULT_MAIN;
+    $template = GlobalData::get( 'main_template' ) ?: self::DEFAULT_MAIN;
     return $this->get_full_path( self::TEMPLATE_KEY ) . '/' . $template . self::TEMPLATE_EXTENSION;
   }
 

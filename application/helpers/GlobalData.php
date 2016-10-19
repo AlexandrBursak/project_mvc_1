@@ -7,6 +7,12 @@ class GlobalData {
   const CONTENT_DATA = 'content_data';
   private static $data = [];
 
+  /**
+   * Set to global data any value
+   *
+   * @param $property
+   * @param $value
+   */
   public static function set( $property, $value )
   {
     self::$data[$property] = $value;
@@ -30,7 +36,13 @@ class GlobalData {
       return false;
     }
   }
-  
+
+  /**
+   * Add or change any values into data
+   *
+   * @param $property
+   * @param $value
+   */
   public static function append( $property, $value )
   {
     if ( isset( static::$data[ $property ] ) )
@@ -38,11 +50,6 @@ class GlobalData {
       $value = array_merge( static::$data[$property], $value );
     }
     self::set( $property, $value );
-  }
-
-  public static function __callStatic( $name, $arguments ) 
-  {
-    return self::$data;
   }
 
   public static function view()
