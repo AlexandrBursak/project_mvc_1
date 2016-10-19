@@ -1,6 +1,7 @@
 <?php
 
 namespace Core;
+use helpers\ClassException;
 use helpers\Configs;
 use helpers\Routing;
 use helpers\Loader;

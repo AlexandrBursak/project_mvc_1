@@ -7,6 +7,8 @@ class Loader {
   const COMPONENT_CONTROLLER = 'controller';
   const COMPONENT_MODEL = 'model';
   const COMPONENT_VIEW = 'view';
+
+  const ACTION_METHOD_EXTENSION = '';
   
   static public function load_component( $type )
   {
@@ -23,7 +25,7 @@ class Loader {
   static public function load_method( $component, $type )
   {
     if ( ! method_exists( $component, self::get_method( $type ) ) ) {
-      header( 'Location: ' . GlobalData::get( 'rootFolder' ) );
+      header( 'Location: ' . GlobalData::get( Routing::PROJECT_DIR ) );
     } else {
       $name_method = self::get_method( $type );
     }
@@ -51,13 +53,13 @@ class Loader {
     switch ( $type )
     {
       case self::COMPONENT_VIEW:
-        return GlobalData::get( 'action' );
+        return GlobalData::get( 'action' ) . self::ACTION_METHOD_EXTENSION;
         break;
       case self::COMPONENT_MODEL:
-        return GlobalData::get( 'action' );
+        return GlobalData::get( 'action' ) . self::ACTION_METHOD_EXTENSION;
         break;
       case self::COMPONENT_CONTROLLER:
-        return GlobalData::get( 'action' ) . '_Action';
+        return GlobalData::get( 'action' ) . self::ACTION_METHOD_EXTENSION;
         break;
     }
   }

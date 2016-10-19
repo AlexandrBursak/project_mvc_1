@@ -9,10 +9,10 @@ class Home_View extends Base_View {
 
   function index() {
     GlobalData::append( GlobalData::CONTENT_DATA, [
-      'content' => 'Lorem ipsum!'
+      'content' => '<a href="#">Lorem ipsum!</a>'
     ] );
     GlobalData::append( GlobalData::CONTENT_DATA, [
-      'content_h1' => 'Hello world!'
+      'content_h1' => 'Hello, world!'
     ] );
   }
 

@@ -1,3 +1,3 @@
 <footer>
-  <div class="container">Tet MVC system</div>
+  <div class="container">Test MVC system</div>
 </footer>

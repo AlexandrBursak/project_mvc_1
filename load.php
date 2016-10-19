@@ -1,5 +1,11 @@
 <?php
 
+if ( !defined('MVC_ENV') || MVC_ENV !== true )
+{
+  echo 'Stop';
+  exit;
+}
+
 use helpers\ClassException as ClassException;
 
 /**

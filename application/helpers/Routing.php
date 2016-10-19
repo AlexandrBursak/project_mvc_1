@@ -9,6 +9,8 @@ class Routing {
   const PROJECT_PATH = 'rootPath';
   const URI_PATH = 'uriPath';
 
+  const DENIED_URI = [ 'index.php', 'load.php' ];
+
   static function parse()
   {
     static::$url = $_SERVER['REQUEST_URI'];
@@ -24,6 +26,10 @@ class Routing {
    */
   static function parseURL()
   {
+    if ( in_array( trim( GlobalData::get( self::URI_PATH ) , '/' ), self::DENIED_URI ) )
+    {
+      header( 'Location: ' . GlobalData::get( self::PROJECT_DIR ) );
+    }
     $arr = explode('/', trim( GlobalData::get( self::URI_PATH ), '/' ), 3 );
 
     $page = 'Home';

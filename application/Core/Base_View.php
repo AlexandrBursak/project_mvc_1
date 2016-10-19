@@ -2,6 +2,7 @@
 
 namespace Core;
 use helpers\GlobalData;
+use helpers\ClassException;
 use helpers\Routing;
 
 
@@ -34,8 +35,8 @@ class Base_View {
 
   function parse_layout()
   {
-    $this->set_meta_date( GlobalData::get( GlobalData::META_DATA ) );
-    $this->set_date( GlobalData::get( GlobalData::CONTENT_DATA ) );
+    $this->set_meta_data( GlobalData::get( GlobalData::META_DATA ) );
+    $this->set_data( GlobalData::get( GlobalData::CONTENT_DATA ) );
     $this->parse_content();
     $this->show();
   }
@@ -75,7 +76,7 @@ class Base_View {
 
   function get_default_header()
   {
-    $template = GlobalData::get( 'header_template' ) ?: self::DEFAULT_HEADER;
+    $template = GlobalData::get( GlobalData::TEMPLATE_HEADER ) ?: self::DEFAULT_HEADER;
     return $this->get_full_path( self::COMPONENT_KEY ) . '/' . $template . self::TEMPLATE_EXTENSION;
   }
 
@@ -97,39 +98,75 @@ class Base_View {
     return $this->get_full_path( self::TEMPLATE_KEY ) . '/' . $template . self::TEMPLATE_EXTENSION;
   }
 
-  function set_content($attr)
-  {
-    $this->content = $attr;
-  }
-
-  function get_content()
-  {
-    return $this->content;
-  }
-
-  function set_date( $data )
-  {
-    $this->data = $data;
-  }
-
-  function get_data()
-  {
-    return $this->data;
-  }
-
-  function set_meta_date( $data )
-  {
-    $this->meta_data = $data;
-  }
-
-  function get_meta_data()
-  {
-    return $this->meta_data;
-  }
 
   function show()
   {
     echo $this->get_content();
+  }
+
+  /**
+   * @param $property
+   * @param $value
+   *
+   * @throws \helpers\ClassException
+   */
+  function __set( $property, $value )
+  {
+    if ( property_exists( __CLASS__, $property ) )
+    {
+      $this->$property = $value;
+    }
+    else
+    {
+      throw new ClassException( 'Property ' . $property . ' is absent' );
+    }
+  }
+
+  /**
+   * @param $property
+   *
+   * @return mixed
+   * @throws \helpers\ClassException
+   */
+  function __get( $property )
+  {
+    if ( property_exists( $this, $property ) )
+    {
+      return $this->$property;
+    }
+    else
+    {
+      throw new ClassException( 'Property ' . $property . ' is absent' );
+    }
+  }
+
+  /**
+   * @param $method
+   * @param $values
+   *
+   * @return mixed
+   * @throws \helpers\ClassException
+   */
+  function __call( $method, $values )
+  {
+    if ( strpos( $method, 'get' ) === 0 )
+    {
+      $method_orr = str_replace( 'get_', '', $method );
+      return $this->$method_orr;
+    }
+    else if ( strpos( $method, 'set' ) === 0 )
+    {
+      $method_orr = str_replace( 'set_', '', $method );
+      $this->$method_orr = $values[0];
+    }
+    else if ( method_exists( $this, $method ) )
+    {
+      $this->$method( $values );
+    }
+    else
+    {
+      throw new ClassException( 'Method ' . $method . ' is absent' );
+    }
   }
 
 }
