@@ -8,6 +8,10 @@ class Loader {
   const COMPONENT_MODEL = 'model';
   const COMPONENT_VIEW = 'view';
 
+  const FOLDER_VIEWS = 'Views';
+  const FOLDER_MODELS = 'Models';
+  const FOLDER_CONTROLLER = 'Controllers';
+
   const ACTION_METHOD_EXTENSION = '';
   
   static public function load_component( $type )
@@ -38,13 +42,13 @@ class Loader {
     switch ( $type ) 
     {
       case self::COMPONENT_VIEW:
-        return 'Views\\' . ucfirst( GlobalData::get( Routing::PAGE ) ) . '_View';
+        return self::FOLDER_VIEWS . '\\' . ucfirst( GlobalData::get( Routing::PAGE ) ) . '_View';
         break;
       case self::COMPONENT_MODEL:
-        return 'Models\\' . ucfirst( GlobalData::get( Routing::PAGE ) ) . '_Model';
+        return self::FOLDER_MODELS . '\\' . ucfirst( GlobalData::get( Routing::PAGE ) ) . '_Model';
         break;
       case self::COMPONENT_CONTROLLER:
-        return 'Controllers\\' . ucfirst( GlobalData::get( Routing::PAGE ) ) . '_Controller';
+        return self::FOLDER_CONTROLLER . '\\' . ucfirst( GlobalData::get( Routing::PAGE ) ) . '_Controller';
         break;
     }
   }

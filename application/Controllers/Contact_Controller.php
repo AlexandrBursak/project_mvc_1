@@ -11,4 +11,9 @@ class Contact_Controller extends Base_Controller {
 //    $this->set_view( 'home', 'index' );
   }
 
+  function send( $args = null )
+  {
+
+  }
+
 }
