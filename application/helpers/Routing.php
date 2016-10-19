@@ -5,6 +5,9 @@ namespace helpers;
 class Routing {
 
   static private $url;
+  const PROJECT_DIR = 'rootDir';
+  const PROJECT_PATH = 'rootPath';
+  const URI_PATH = 'uriPath';
 
   static function parse()
   {
@@ -21,7 +24,7 @@ class Routing {
    */
   static function parseURL()
   {
-    $arr = explode('/', trim( GlobalData::get( 'uriPath' ), '/' ), 3 );
+    $arr = explode('/', trim( GlobalData::get( self::URI_PATH ), '/' ), 3 );
 
     $page = 'Home';
     if ( !empty( $arr[0] ) )
@@ -47,15 +50,15 @@ class Routing {
 
   static function cutRootDirectory()
   {
-    $current_project = pathinfo($_SERVER['PHP_SELF']);
-    GlobalData::set( 'rootFolder', $current_project['dirname'] );
-    GlobalData::set( 'uriPath', str_replace($current_project['dirname'],'',self::$url) );
+    $project = pathinfo($_SERVER['PHP_SELF']);
+    GlobalData::set( self::PROJECT_DIR, $project['dirname'] );
+    GlobalData::set( self::URI_PATH, str_replace( $project['dirname'], '', self::$url ) );
   }
 
   static function setToGlobalRootPath()
   {
-    $root_path = rtrim( '//' . $_SERVER['HTTP_HOST'] . GlobalData::get( 'rootFolder' ), '/' ) . '/';
-    GlobalData::set( 'rootPath', $root_path );
+    $root_path = rtrim( '//' . $_SERVER['HTTP_HOST'] . GlobalData::get( self::PROJECT_DIR ), '/' ) . '/';
+    GlobalData::set( self::PROJECT_PATH, $root_path );
   }
 
 }

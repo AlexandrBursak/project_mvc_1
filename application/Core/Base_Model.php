@@ -13,11 +13,11 @@ class Base_Model {
     $navigation = [
       [
         'title' => 'Home',
-        'url' => 'home/'
+        'url'   => 'home/'
       ],
       [
         'title' => 'Contact',
-        'url' => 'contact/'
+        'url'   => 'contact/'
       ],
     ];
     foreach($navigation as &$nav)
