@@ -5,7 +5,15 @@ class GlobalData {
 
   const META_DATA = 'meta_data';
   const CONTENT_DATA = 'content_data';
+
+  const TEMPLATE_HEADER = 'path_header_template';
+
   private static $data = [];
+
+  public function __construct()
+  {
+    throw new ClassException( 'Нельзя!!!!' );
+  }
 
   /**
    * Set to global data any value
