@@ -9,8 +9,9 @@ class Contact_Model extends Base_Model
   function index( $data = null )
   {
     GlobalData::append( GlobalData::META_DATA, [ 
-      'title' => 'Hello world'
+      'title' => 'Hello world',
     ] );
+
   }
   function send( $data = null )
   {

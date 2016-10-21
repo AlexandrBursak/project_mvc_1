@@ -21,6 +21,10 @@ class Base_Model {
         'title' => 'Contact',
         'url'   => 'contact/'
       ],
+      [
+        'title' => 'About Us',
+        'url'   => 'about/'
+      ],
     ];
     foreach($navigation as &$nav)
     {
