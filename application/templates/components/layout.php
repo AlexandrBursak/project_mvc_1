@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?php echo $meta_data['title']; ?></title>
 
-    <link href="<?php echo $permalink; ?>assets/bootstrap/css/bootstrap.css" rel="stylesheet">
-    <link href=<?php echo $permalink; ?>assets/font-awesome/css/font-awesome.min.css" type="text/css" rel="stylesheet">
+    <link href="<?php echo $permalink; ?>assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="<?php echo $permalink; ?>assets/font-awesome/css/font-awesome.min.css" type="text/css" rel="stylesheet">
     <link href="<?php echo $permalink; ?>assets/css/my_style.css" type="text/css" rel="stylesheet">
     <link href="<?php echo $permalink; ?>assets/css/style.css" rel="stylesheet">
 
@@ -26,9 +26,9 @@
 
     <?php echo $content['footer']; ?>
 </div>
-</body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 <script src="http://malsup.github.com/jquery.cycle2.js"></script>
 <script src="<?php echo $permalink; ?>assets/bootstrap/js/bootstrap.min.js"></script>
+</body>
 </html>
