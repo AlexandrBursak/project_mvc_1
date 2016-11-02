@@ -62,9 +62,8 @@ class GlobalData {
 
   public static function view()
   {
-    echo '<h3>Config</h3><pre><div>';
-    print_r( self::$data );
-    echo '</div></pre>';
+    echo '<h3>Config</h3>';
+    dump( self::$data );
   }
 
 }

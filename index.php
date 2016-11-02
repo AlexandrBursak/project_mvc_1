@@ -6,7 +6,8 @@ define('MVC_ENV', true);
 define('ROOT_PATH', __DIR__);
 define('APPLICATION', 'application/');
 define('APP_PATH', ROOT_PATH . '/' . APPLICATION);
-require_once(__DIR__ . '/load.php');
+require_once(APP_PATH . 'helpers/help_function.php');
+require_once(ROOT_PATH . '/load.php');
 
 $core = new \Core\Core();
 $core->run();
