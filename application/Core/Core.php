@@ -24,6 +24,7 @@ class Core {
       $args = GlobalData::get( Routing::DATA );
     }
 
+
     /**
      * Run action in controller
      */

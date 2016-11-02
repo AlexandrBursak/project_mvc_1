@@ -12,4 +12,11 @@ class Contact_Model extends Base_Model
       'title' => 'Hello world'
     ] );
   }
+  function send( $data = null )
+  {
+//    print_r($_POST);
+//    print_r($_GET);
+//    exit;
+    // parse data from contact form
+  }
 }

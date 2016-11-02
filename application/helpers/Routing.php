@@ -13,11 +13,19 @@ class Routing {
   const ACTION = 'action';
   const DATA = 'data';
 
+  const DEFAULT_PAGE = 'Home';
+  const DEFAULT_ACTION = 'index';
+
   const DENIED_URI = [ 'index.php', 'load.php' ];
 
   static function parse()
   {
-    static::$url = $_SERVER['REQUEST_URI'];
+    $parts_link = explode( '?', $_SERVER['REQUEST_URI'] );
+    static::$url = $parts_link[0];
+    if ( isset($parts_link[1]) )
+    {
+      $get_data = $parts_link[1]; // this part we should parse additional
+    }
     self::cutRootDirectory();
     self::setToGlobalRootPath();
     self::parseURL();
@@ -36,14 +44,14 @@ class Routing {
     }
     $arr = explode('/', trim( GlobalData::get( self::URI_PATH ), '/' ), 3 );
 
-    $page = 'Home';
+    $page = self::DEFAULT_PAGE;
     if ( !empty( $arr[0] ) )
     {
       $page = $arr[0];
     }
     GlobalData::set( self::PAGE, $page );
 
-    $action = "index";
+    $action = self::DEFAULT_ACTION;
     if ( isset( $arr[1] ) )
     {
       $action = $arr[1];
