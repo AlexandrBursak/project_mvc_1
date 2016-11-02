@@ -62,7 +62,6 @@ class Base_View {
     }
 
     $this->set_content( $content['layout'] );
-
   }
   
   private function get_full_path( $deep=null )
